@@ -73,7 +73,9 @@ Key files for context:
 ## Context Management
 
 - At the start of each session: read `ai/context.md` for current build state
-- At the end of each session: update `ai/context.md` to reflect what was built, decided, or changed
+- At the end of each session, update:
+  - `ai/context.md` — what was built, decided, or changed
+  - `ai/enhancements/ENHANCEMENTS.md` — status for any enhancement that started, completed, or was added
 - If a significant architectural decision is made mid-session, note it in `ai/context.md` immediately
 
 ---

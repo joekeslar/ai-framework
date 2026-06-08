@@ -4,6 +4,30 @@
 
 ---
 
+## v1.3 — 2026-06-08
+
+### Fixed
+- `project-template/CLAUDE.md` — "After Each Task" now includes `ENHANCEMENTS.md`; previously only `context.md` was listed, causing ENHANCEMENTS.md to be skipped in Claude Code sessions
+- `project-template/ai/principles.md` — "Context Management" now includes `ENHANCEMENTS.md` in end-of-session update instructions; same gap existed for Claude Desktop users
+- `START-HERE.md` — Claude Desktop setup step simplified; principles.md now carries the full session rules, so no separate instruction line is needed
+
+---
+
+## v1.2 — 2026-06-05
+
+### Added
+- `ENHANCEMENTS.md` status index to project template (`ai/enhancements/ENHANCEMENTS.md`)
+- Status key: ✅ Complete · 🔄 In Progress · 🔵 Not Started · 💡 Idea
+- Ideas tracked in ENHANCEMENTS.md alongside enhancements — one place to look for everything
+- `ENHANCEMENTS.md` added to document governance table in START-HERE.md
+
+### Changed
+- `prompts/session-start.md` — end-of-session protocol now includes updating `ENHANCEMENTS.md` when an enhancement or idea changes state
+- `START-HERE.md` — folder structure diagram and framework files reference updated to include `ENHANCEMENTS.md`; session-ending description updated
+- Standard Enhancement workflow in START-HERE.md notes ENHANCEMENTS.md update on completion
+
+---
+
 ## v1.1 — 2025-05-29
 
 ### Added

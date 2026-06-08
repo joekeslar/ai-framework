@@ -26,7 +26,7 @@ Not every change needs the full pipeline. Use the right level of effort for the 
 1. Copy `templates/enhancement.md` into `ai/enhancements/NNN-name/plan.md`
 2. Fill in scope, approach, and regression check
 3. Use `prompts/blueprint-to-todo.md` if the work is complex enough to need a checklist
-4. Work through it, update `ai/context.md` when done
+4. Work through it, update `ai/context.md` and `ai/enhancements/ENHANCEMENTS.md` when done
 
 ### Full Application Build (new app from scratch)
 1. Follow the complete pipeline below — idea → spec → blueprint → todo
@@ -66,9 +66,7 @@ Work through these with Claude before writing any code.
 **If using Claude Desktop:**
 1. Create a new Project in Claude Desktop named after your app
 2. Paste the contents of `ai/principles.md` into the Project Instructions field
-3. Add this line at the top of Instructions:
-   > At the start of each session, read ai/context.md. At the end of each session,
-   > update ai/context.md to reflect what was built, decided, or changed.
+3. `principles.md` already contains the session start/end rules — no extra line needed
 
 **If using Claude Code:**
 1. Fill in `CLAUDE.md` at the project root — Claude Code reads this automatically
@@ -98,7 +96,8 @@ Before we start, please read:
 ### Ending a Claude session
 
 Use the end-of-session prompt in `prompts/session-start.md`.
-Claude updates `ai/context.md` and `ai/blueprint.md` if architectural decisions were made.
+Claude updates `ai/context.md`, `ai/blueprint.md` if architectural decisions were made,
+and `ai/enhancements/ENHANCEMENTS.md` if any enhancement changed state.
 
 ### When an idea surfaces mid-session
 
@@ -118,6 +117,7 @@ Claude updates `ai/context.md` and `ai/blueprint.md` if architectural decisions 
 | `blueprint.md` | An architectural decision is made or changed | Claude at end of session, or you |
 | `principles.md` | A new design rule is established or an old one changes | You — then sync `CLAUDE.md` |
 | `context.md` | Every session ends | Claude — automatically |
+| `enhancements/ENHANCEMENTS.md` | An enhancement starts, completes, or is added | Claude — automatically |
 | `changelog.md` | A release or enhancement ships | You — brief entry |
 
 **Spec versioning rule:** when `spec.md` changes significantly, bump the version number and add a changelog entry at the bottom. Don't silently overwrite — future-you needs to know what changed and why.
@@ -137,6 +137,7 @@ my-app/
 │   ├── principles.md              # Design rules — Claude always follows these
 │   ├── context.md                 # Current state — Claude maintains this
 │   └── enhancements/
+│       ├── ENHANCEMENTS.md        # Status index — Claude maintains this
 │       ├── ideas/                 # Parking lot for ideas not ready to plan
 │       │   └── [idea.md files]
 │       ├── 001-foundation/
@@ -164,6 +165,7 @@ ai-framework/
 │   │   ├── principles.md
 │   │   ├── context.md
 │   │   └── enhancements/
+│   │       ├── ENHANCEMENTS.md    # Status index — Claude maintains this
 │   │       ├── ideas/
 │   │       └── 001-foundation/
 │   │           └── plan.md

@@ -59,5 +59,8 @@ Please update the project files to reflect this session:
 2. ai/blueprint.md — if any architectural decisions were made this session,
    update the relevant sections and log the change in the blueprint changelog
 
+3. ai/enhancements/ENHANCEMENTS.md — update the status row for any enhancement
+   that changed state this session (started, completed, or newly added)
+
 Keep context.md concise — it's a status snapshot, not documentation.
 ```

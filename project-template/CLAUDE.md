@@ -67,10 +67,12 @@ I use Claude Desktop and Claude Code as my AI development tools.
 
 ## After Each Task
 
-When a task or session is complete, update `ai/context.md` to reflect:
-- What was built or changed
-- Any decisions made and why
-- Current known issues
-- What's next
+When a task or session is complete, update these files automatically — don't wait to be asked:
 
-Do this automatically — don't wait to be asked.
+1. `ai/context.md` — update with:
+   - What was built or changed
+   - Any decisions made and why
+   - Current known issues
+   - What's next
+
+2. `ai/enhancements/ENHANCEMENTS.md` — update the status row for any enhancement that changed state (started, completed, or newly added)
