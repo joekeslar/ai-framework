@@ -72,11 +72,14 @@ Key files for context:
 
 ## Context Management
 
-- At the start of each session: read `ai/context.md` for current build state
-- At the end of each session, update:
-  - `ai/context.md` — what was built, decided, or changed
-  - `ai/enhancements/ENHANCEMENTS.md` — status for any enhancement that started, completed, or was added
-- If a significant architectural decision is made mid-session, note it in `ai/context.md` immediately
+- At the start of each session: read `ai/context.md` and note the "Last updated" date — flag it if it looks stale before starting work
+- If there's an active enhancement plan, confirm its assumptions still hold given what's been completed since it was written — flag mismatches before implementing
+- Run checkpoint updates throughout the session — after decisions, status changes, or meaningful work — not just at the end
+- When completing an enhancement, run an impact scan before closing it out:
+  - Check all Not Started and In Progress enhancement plan.md files
+  - Check all idea files in `ai/enhancements/ideas/`
+  - Note any scope, approach, or assumption changes in the affected file
+- At end of session: verify `ai/context.md` and `ai/enhancements/ENHANCEMENTS.md` are current — if checkpoints were run during the session, this is just a quick check
 
 ---
 

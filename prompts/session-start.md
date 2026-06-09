@@ -14,10 +14,16 @@ Before we begin, please read these files to restore your context for this projec
 2. ai/context.md — current state of the app (what's built, what's in progress, known issues)
 3. The plan.md for the active enhancement — path is in the "Active enhancement" field of context.md
 
-Once you've read them, briefly confirm:
+Then do a quick recovery check:
+- Note the "Last updated" date in context.md — if it looks older than our last session,
+  flag it before we start (the previous session may have closed without a checkpoint)
+- If there's an active enhancement plan, confirm its assumptions still hold given what's
+  been completed since the plan was written — flag any mismatches before implementing
+
+Once you've done this, briefly confirm:
 - Your understanding of where the app is at
 - What we're working on today
-- Any questions before we start
+- Any stale docs or plan concerns to resolve before starting
 
 Then we'll begin.
 ```
@@ -45,22 +51,27 @@ Let's go.
 
 ---
 
-## End of Session (ask Claude to do this before closing)
+## End of Session
 
 ```
-Please update the project files to reflect this session:
+Before closing, determine which state applies:
 
-1. ai/context.md — update with:
-   - What we built or changed
-   - Any decisions made and why
-   - Current known issues
-   - What's next
+If the active enhancement is still in progress (only some steps done this session):
+1. ai/context.md — update with what was completed, exactly where we stopped,
+   any decisions made, and what to pick up next session
+2. ai/enhancements/ENHANCEMENTS.md — confirm status is 🔄 In Progress
+No impact scan needed — the enhancement is not closed out yet.
 
-2. ai/blueprint.md — if any architectural decisions were made this session,
-   update the relevant sections and log the change in the blueprint changelog
+If the active enhancement is fully complete this session:
+1. Run the impact scan (use prompts/session-checkpoint.md — On Enhancement Close-Out)
+2. ai/context.md — update with what was built, decisions made, known issues, what's next
+3. ai/enhancements/ENHANCEMENTS.md — mark the enhancement ✅ Complete
 
-3. ai/enhancements/ENHANCEMENTS.md — update the status row for any enhancement
-   that changed state this session (started, completed, or newly added)
+If no active enhancement (general session work):
+1. ai/context.md — update with what was built, decided, or changed
+2. ai/enhancements/ENHANCEMENTS.md — update any rows that changed state
 
-Keep context.md concise — it's a status snapshot, not documentation.
+If you ran checkpoints and an impact scan during the session, just verify nothing was missed.
 ```
+
+> Use prompts/session-checkpoint.md to run checkpoints and impact scans mid-session.

@@ -93,11 +93,32 @@ Before we start, please read:
 - ai/context.md — current state including active enhancement path
 ```
 
+Claude will flag any stale docs and confirm the active enhancement plan is still valid
+before starting work. In Claude Code, run `/session-start`.
+
+### During a session
+
+Run a checkpoint whenever a natural stopping point is reached — a decision made, an
+enhancement status changed, or meaningful work completed. Use `prompts/session-checkpoint.md`.
+In Claude Code, run `/session-checkpoint`.
+
+When an enhancement is completed, run an impact scan before closing it out:
+- Check all Not Started and In Progress enhancement plan files
+- Check all idea files in `ai/enhancements/ideas/`
+- Note any scope or assumption changes in the affected files
+
+In Claude Code, run `/enhancement-closeout`.
+
+When picking up a Not Started enhancement to implement, confirm the plan still holds
+given everything completed since it was written.
+
 ### Ending a Claude session
 
 Use the end-of-session prompt in `prompts/session-start.md`.
-Claude updates `ai/context.md`, `ai/blueprint.md` if architectural decisions were made,
-and `ai/enhancements/ENHANCEMENTS.md` if any enhancement changed state.
+In Claude Code, run `/session-end`.
+If checkpoints were run during the session, this is just a quick verify — not a full
+batch write. Claude confirms `ai/context.md` and `ai/enhancements/ENHANCEMENTS.md`
+are current and nothing was missed.
 
 ### When an idea surfaces mid-session
 
@@ -146,6 +167,12 @@ my-app/
 │       │   ├── plan.md
 │       │   └── decisions.md       # Optional: notable decisions and why
 │       └── 003-[feature]/
+├── .claude/
+│   └── commands/                  # Claude Code slash commands
+│       ├── session-start.md       # /session-start
+│       ├── session-checkpoint.md  # /session-checkpoint
+│       ├── enhancement-closeout.md # /enhancement-closeout
+│       └── session-end.md         # /session-end
 ├── changelog.md                   # What shipped and when (brief)
 └── [source code]
 ```
@@ -169,6 +196,12 @@ ai-framework/
 │   │       ├── ideas/
 │   │       └── 001-foundation/
 │   │           └── plan.md
+│   ├── .claude/
+│   │   └── commands/              # Claude Code slash commands — copy to each project
+│   │       ├── session-start.md
+│   │       ├── session-checkpoint.md
+│   │       ├── enhancement-closeout.md
+│   │       └── session-end.md
 │   └── changelog.md
 ├── templates/
 │   ├── enhancement.md             # Standard feature, bug fix, or refactor
@@ -178,6 +211,7 @@ ai-framework/
 │   ├── idea-to-spec.md            # Generate spec.md from an idea
 │   ├── spec-to-blueprint.md       # Generate blueprint.md from spec.md
 │   ├── blueprint-to-todo.md       # Generate a task checklist from blueprint.md
-│   └── session-start.md           # Start and end Claude sessions correctly
+│   ├── session-start.md           # Start and end Claude sessions correctly
+│   └── session-checkpoint.md      # Mid-session checkpoint and enhancement close-out impact scan
 └── changelog.md                   # Framework-level changes over time
 ```

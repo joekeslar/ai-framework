@@ -4,6 +4,44 @@
 
 ---
 
+## v1.5 — 2026-06-09
+
+### Added
+- `project-template/.claude/commands/` — four Claude Code slash commands copied into every new project:
+  - `session-start.md` — `/session-start`
+  - `session-checkpoint.md` — `/session-checkpoint`
+  - `enhancement-closeout.md` — `/enhancement-closeout`
+  - `session-end.md` — `/session-end`
+
+### Changed
+- `prompts/session-start.md` — End of Session section rewritten to distinguish three states: enhancement in progress (partial steps done), enhancement fully complete, and no active enhancement. Impact scan only triggered on full completion, not partial close-out.
+- `START-HERE.md` — Day-to-Day Workflow now includes slash command callouts for each step; Project Folder Structure and Framework Files Reference updated to show `.claude/commands/`
+
+### Design decisions
+- Slash commands live in `project-template/.claude/commands/` so they are copied automatically when starting a new project — no separate setup step required
+- Session-end distinguishes partial from complete enhancement close-out to support multi-session enhancement workflows where only some steps are done in a given session
+- `/session-end` calls `/enhancement-closeout` by reference rather than duplicating the impact scan logic — one source of truth for the scan procedure
+
+---
+
+## v1.4 — 2026-06-09
+
+### Added
+- `prompts/session-checkpoint.md` — new prompt for mid-session incremental doc updates and enhancement close-out impact scans
+
+### Changed
+- `prompts/session-start.md` — Full Session Start now includes a recovery check (stale context.md detection and active plan freshness validation); End of Session now references session-checkpoint.md and is leaner — just a verify step when checkpoints were run during the session
+- `project-template/ai/principles.md` — Context Management section rewritten around incremental checkpoints rather than batch-at-end updates; added impact scan and plan freshness check rules
+- `project-template/CLAUDE.md` — After Each Task section rewritten to match; added impact scan on close-out and plan validation before implementation
+- `START-HERE.md` — Day-to-Day Workflow now has a "During a session" subsection covering checkpoints, impact scans, and pre-implementation plan validation; Framework Files Reference updated to include session-checkpoint.md
+
+### Design decisions
+- Shifted from batch-at-end doc updates to incremental checkpoints throughout the session — reduces data loss when a session closes without a formal close-out
+- Impact scan on enhancement close-out covers Not Started enhancements, In Progress enhancements, and all idea files in ideas/ — ensures open plans and unpromoted ideas are flagged when completed work changes their scope
+- Pre-implementation plan freshness check added as a second safety net for plans that were written before subsequent enhancements changed the app
+
+---
+
 ## v1.3 — 2026-06-08
 
 ### Fixed

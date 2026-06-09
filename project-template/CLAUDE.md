@@ -67,12 +67,23 @@ I use Claude Desktop and Claude Code as my AI development tools.
 
 ## After Each Task
 
-When a task or session is complete, update these files automatically — don't wait to be asked:
+Update docs at natural checkpoints throughout the session — don't batch everything to the end:
 
-1. `ai/context.md` — update with:
+1. `ai/context.md` — update after decisions, meaningful work, or status changes:
    - What was built or changed
    - Any decisions made and why
    - Current known issues
    - What's next
 
-2. `ai/enhancements/ENHANCEMENTS.md` — update the status row for any enhancement that changed state (started, completed, or newly added)
+2. `ai/enhancements/ENHANCEMENTS.md` — update the status row whenever an enhancement
+   changes state (started, completed, or newly added)
+
+3. **When completing an enhancement** — run an impact scan before closing it out:
+   - Read all Not Started and In Progress enhancement plan.md files
+   - Read all idea files in `ai/enhancements/ideas/`
+   - If the completed work changes scope, approach, or assumptions for any of them,
+     add a brief note directly to that file
+
+4. **When picking up a Not Started enhancement** — confirm the plan still holds before
+   implementing. Check what's been completed since the plan was written and flag any
+   mismatches before writing code.
