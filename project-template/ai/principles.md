@@ -80,6 +80,7 @@ Key files for context:
   - Check all idea files in `ai/enhancements/ideas/`
   - Note any scope, approach, or assumption changes in the affected file
 - At end of session: verify `ai/context.md` and `ai/enhancements/ENHANCEMENTS.md` are current — if checkpoints were run during the session, this is just a quick check
+- `ENHANCEMENTS.md` is a status board — when a status changes, move the row into the matching section (open work on top, ✅ Complete collapsed at the bottom). When an idea is promoted, strike it through and delete its file from `ideas/`. Run `ai/enhancements/status.sh` for the same board in the terminal
 
 ---
 

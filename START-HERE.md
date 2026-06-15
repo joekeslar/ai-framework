@@ -94,20 +94,20 @@ Before we start, please read:
 ```
 
 Claude will flag any stale docs and confirm the active enhancement plan is still valid
-before starting work. In Claude Code, run `/session-start`.
+before starting work. In Claude Code, run `/ai:session-start`.
 
 ### During a session
 
 Run a checkpoint whenever a natural stopping point is reached — a decision made, an
 enhancement status changed, or meaningful work completed. Use `prompts/session-checkpoint.md`.
-In Claude Code, run `/session-checkpoint`.
+In Claude Code, run `/ai:session-checkpoint`.
 
 When an enhancement is completed, run an impact scan before closing it out:
 - Check all Not Started and In Progress enhancement plan files
 - Check all idea files in `ai/enhancements/ideas/`
 - Note any scope or assumption changes in the affected files
 
-In Claude Code, run `/enhancement-closeout`.
+In Claude Code, run `/ai:enhancement-closeout`.
 
 When picking up a Not Started enhancement to implement, confirm the plan still holds
 given everything completed since it was written.
@@ -115,7 +115,7 @@ given everything completed since it was written.
 ### Ending a Claude session
 
 Use the end-of-session prompt in `prompts/session-start.md`.
-In Claude Code, run `/session-end`.
+In Claude Code, run `/ai:session-end`.
 If checkpoints were run during the session, this is just a quick verify — not a full
 batch write. Claude confirms `ai/context.md` and `ai/enhancements/ENHANCEMENTS.md`
 are current and nothing was missed.
@@ -158,7 +158,8 @@ my-app/
 │   ├── principles.md              # Design rules — Claude always follows these
 │   ├── context.md                 # Current state — Claude maintains this
 │   └── enhancements/
-│       ├── ENHANCEMENTS.md        # Status index — Claude maintains this
+│       ├── ENHANCEMENTS.md        # Status board (grouped by status) — Claude maintains this
+│       ├── status.sh             # Prints the board in the terminal — read-only
 │       ├── ideas/                 # Parking lot for ideas not ready to plan
 │       │   └── [idea.md files]
 │       ├── 001-foundation/
@@ -168,11 +169,13 @@ my-app/
 │       │   └── decisions.md       # Optional: notable decisions and why
 │       └── 003-[feature]/
 ├── .claude/
-│   └── commands/                  # Claude Code slash commands
-│       ├── session-start.md       # /session-start
-│       ├── session-checkpoint.md  # /session-checkpoint
-│       ├── enhancement-closeout.md # /enhancement-closeout
-│       └── session-end.md         # /session-end
+│   └── commands/
+│       └── ai/                    # Claude Code slash commands — the /ai: namespace
+│           ├── session-start.md       # /ai:session-start
+│           ├── session-checkpoint.md  # /ai:session-checkpoint
+│           ├── enhancement-closeout.md # /ai:enhancement-closeout
+│           ├── session-end.md         # /ai:session-end
+│           └── board.md               # /ai:board — prints the enhancement status board
 ├── changelog.md                   # What shipped and when (brief)
 └── [source code]
 ```
@@ -192,16 +195,19 @@ ai-framework/
 │   │   ├── principles.md
 │   │   ├── context.md
 │   │   └── enhancements/
-│   │       ├── ENHANCEMENTS.md    # Status index — Claude maintains this
+│   │       ├── ENHANCEMENTS.md    # Status board (grouped by status) — Claude maintains this
+│   │       ├── status.sh         # Prints the board in the terminal — read-only
 │   │       ├── ideas/
 │   │       └── 001-foundation/
 │   │           └── plan.md
 │   ├── .claude/
-│   │   └── commands/              # Claude Code slash commands — copy to each project
-│   │       ├── session-start.md
-│   │       ├── session-checkpoint.md
-│   │       ├── enhancement-closeout.md
-│   │       └── session-end.md
+│   │   └── commands/
+│   │       └── ai/                # Claude Code slash commands (/ai: namespace) — copy to each project
+│   │           ├── session-start.md
+│   │           ├── session-checkpoint.md
+│   │           ├── enhancement-closeout.md
+│   │           ├── session-end.md
+│   │           └── board.md       # /ai:board — prints the enhancement status board
 │   └── changelog.md
 ├── templates/
 │   ├── enhancement.md             # Standard feature, bug fix, or refactor

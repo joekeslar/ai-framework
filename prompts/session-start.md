@@ -65,13 +65,16 @@ No impact scan needed — the enhancement is not closed out yet.
 If the active enhancement is fully complete this session:
 1. Run the impact scan (use prompts/session-checkpoint.md — On Enhancement Close-Out)
 2. ai/context.md — update with what was built, decisions made, known issues, what's next
-3. ai/enhancements/ENHANCEMENTS.md — mark the enhancement ✅ Complete
+3. ai/enhancements/ENHANCEMENTS.md — mark the enhancement ✅ Complete and move its row into the Complete section (keep the board grouped by status)
+4. ai/blueprint.md — update if any architectural decisions were made this session
 
 If no active enhancement (general session work):
 1. ai/context.md — update with what was built, decided, or changed
 2. ai/enhancements/ENHANCEMENTS.md — update any rows that changed state
 
 If you ran checkpoints and an impact scan during the session, just verify nothing was missed.
+
+Then prompt me to push — so the repo always captures the updated ai/ files.
 ```
 
 > Use prompts/session-checkpoint.md to run checkpoints and impact scans mid-session.

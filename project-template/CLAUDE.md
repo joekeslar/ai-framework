@@ -75,8 +75,12 @@ Update docs at natural checkpoints throughout the session — don't batch everyt
    - Current known issues
    - What's next
 
-2. `ai/enhancements/ENHANCEMENTS.md` — update the status row whenever an enhancement
-   changes state (started, completed, or newly added)
+2. `ai/enhancements/ENHANCEMENTS.md` — the status board. Update the row whenever an
+   enhancement changes state (started, completed, or newly added), and move it into the
+   matching status section so the board stays grouped — 🔄 In Progress and 🔵 Not Started
+   on top, ✅ Complete collapsed at the bottom. When an idea is promoted to an enhancement,
+   strike it through in the Ideas section and delete its file from `ai/enhancements/ideas/`.
+   Run `ai/enhancements/status.sh` for the same board in the terminal.
 
 3. **When completing an enhancement** — run an impact scan before closing it out:
    - Read all Not Started and In Progress enhancement plan.md files

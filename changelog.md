@@ -4,6 +4,26 @@
 
 ---
 
+## v1.6 — 2026-06-15
+
+### Added
+- `project-template/ai/enhancements/status.sh` — read-only script that renders `ENHANCEMENTS.md` as a colored, grouped board in the terminal (🔄 In Progress / 🔵 Not Started / 🟣 Split / 💡 Ideas on top, ✅ Complete collapsed at the bottom). Run from `ai/enhancements/`.
+- `project-template/.claude/commands/ai/board.md` — `/ai:board` slash command that runs `status.sh` and prints the enhancement board without leaving the chat.
+
+### Changed
+- `project-template/ai/enhancements/ENHANCEMENTS.md` — reworked from a single flat table into a status board: one table per status section, open work on top, ✅ Complete collapsed at the bottom. Added a status key and maintenance note.
+- `project-template/CLAUDE.md`, `project-template/.claude/commands/{session-checkpoint,session-end}.md`, `prompts/{session-checkpoint,session-start}.md` — close-out/checkpoint steps now say to **move** the row into the matching status section (keep the board grouped), not just edit it in place.
+- `project-template/.claude/commands/session-end.md` + `prompts/session-start.md` (End of Session) — folded in two refinements proven in the NutriVibing project: on full close-out, **update `ai/blueprint.md` if any architectural decisions were made**; and **prompt to push at the end** so the repo always captures the updated `ai/` files. New projects now get these by default.
+- `project-template/ai/enhancements/ideas/README.md` — promoting an idea now means strike it through in `ENHANCEMENTS.md` **and delete its file from `ideas/`**, so the folder stays a true list of only-still-unplanned ideas.
+- `START-HERE.md` — folder-structure diagrams now show `status.sh` and describe `ENHANCEMENTS.md` as a status board.
+- **Slash commands moved into the `/ai:` namespace.** All five commands now live in `project-template/.claude/commands/ai/` and are invoked as `/ai:session-start`, `/ai:session-checkpoint`, `/ai:enhancement-closeout`, `/ai:session-end`, `/ai:board` — so framework commands group together and are easy to tell apart from project-specific or built-in commands. Updated all references in `START-HERE.md`, the `/ai:session-end` command (which calls `/ai:enhancement-closeout`), and project READMEs.
+
+### Design decisions
+- `status.sh` reads `ENHANCEMENTS.md` (the one artifact Claude maintains every session) rather than re-scanning each `NNN-/plan.md`. The per-folder `plan.md` status lines are written once and drift; reading the maintained index means the terminal board can never disagree with the file. This was chosen after the first cut — which scanned `plan.md` files — surfaced real drift in a live project (several completed enhancements still said "Not Started" in their folder headers).
+- The board groups by status instead of sorting by number so the few open items aren't buried among dozens of completed rows — the original complaint that prompted this change.
+
+---
+
 ## v1.5 — 2026-06-09
 
 ### Added
