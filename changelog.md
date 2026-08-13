@@ -4,6 +4,86 @@
 
 ---
 
+## v1.7 — 2026-08-13
+
+**Theme: `ai/context.md` is a lean snapshot, not a log.** Live projects were developing severe
+context.md bloat — it's loaded at the start of every session, and the framework's own
+conventions told each session to append its full narrative to it, with no size cap and nowhere
+else for detail to go. This release removes the instructions that caused the growth, gives the
+narrative a proper home, and adds a safe one-time remediation for projects already bloated.
+
+### The contract (installed everywhere)
+- `**Last updated:**` is ONE line — date + one sentence, **replaced** each time. Never appended
+  to, never a nested changelog
+- Per-session narrative detail goes in the active enhancement's `plan.md` **Execution Log**;
+  context.md points at it
+- `## Recent Sessions` — rolling, capped at ~3 one-line entries, each linking its plan.md
+- `## Open Issues` — unresolved only; resolved items are deleted, not struck through
+- `## What's Next` — open items plus a single launch tracker; no completed-checklist buildup
+- Architectural decisions go in the `ai/blueprint.md` changelog, not a table in context.md
+- Prefer pointers to `ENHANCEMENTS.md` / `plan.md` / `blueprint.md` over restating them
+- The durable `## Key Facts` reference core stays; prune only superseded entries
+
+### Added
+- `project-template/.claude/commands/ai/context-pare-down.md` — `/ai:context-pare-down`, a
+  one-time, opt-in remediation for an already-bloated project. Copies the current `context.md`
+  **verbatim** into `ai/context-archive.md`, **diff-verifies** it as a hard gate (nothing is
+  trimmed until the diff is clean), then rewrites `context.md` to the lean skeleton carrying
+  forward current state plus the full Key Facts reference core. Reports before/after line
+  counts and what was dropped by category.
+- **`ai/context-archive.md` convention** — frozen history, created lazily, **never in the
+  session-start read list**. The file stays in the repo; it's only out of the read path.
+- **Execution Log** section in `templates/enhancement.md` and
+  `project-template/ai/enhancements/001-foundation/plan.md` — the new home for per-session
+  narrative. Both templates also note that architectural decisions belong in `blueprint.md`.
+
+### Changed
+- `project-template/ai/context.md` — reshaped to a lean skeleton with the maintenance rules
+  baked in as a blockquote near the top. **Removed** the `Enhancement Roadmap` (duplicated
+  `ENHANCEMENTS.md`), the cumulative `Recent Decisions` table (belongs in blueprint.md), and
+  `Known Issues` kept as struck-through history. **Added** `## Recent Sessions` (capped),
+  `## Open Issues` (unresolved only), and `## Pointers`.
+- `project-template/.claude/commands/ai/session-end.md` — the primary bloat driver. "Update
+  context.md with what was built, decisions made, known issues, what's next" (no cap, nowhere
+  else to put detail) replaced with: detail → plan.md Execution Log, decisions → blueprint.md,
+  context.md gets a replaced one-line `Last updated` and one capped Recent Sessions entry.
+  Carries the full contract, plus a "if context.md grew this session, find what to delete" check.
+- `project-template/.claude/commands/ai/session-checkpoint.md` — checkpoints now write detail to
+  the plan.md Execution Log and make only snapshot edits to context.md; they add nothing to
+  Recent Sessions (that's one entry at session end).
+- `project-template/.claude/commands/ai/enhancement-closeout.md` — impact notes now live only in
+  the affected `plan.md`/idea file. The "Flag it in ai/context.md under Known Issues or What's
+  Next" instruction — which fed a Known-Issues graveyard — is gone; context.md gets a line only
+  for genuinely unresolved blockers, deleted on resolution.
+- `project-template/CLAUDE.md` ("After Each Task", item 1) and `project-template/ai/principles.md`
+  ("Context Management") — both restate the contract, kept in sync as declared.
+- `prompts/session-checkpoint.md` and `prompts/session-start.md` (End of Session) — the Claude
+  Desktop mirrors of those commands, updated to match so both entry points enforce the same rules.
+- `START-HERE.md` — new "Keeping context.md Lean" section covering the contract, the archive
+  convention, and the remediation procedure; governance table and both folder diagrams updated.
+
+### Unchanged (deliberately)
+- `project-template/.claude/commands/ai/session-start.md` — read list untouched, and confirmed
+  it does **not** read `ai/context-archive.md`. It reads `principles.md`, `context.md`, and the
+  active `plan.md` only.
+- Remediation is opt-in per project; nothing here rewrites an existing project automatically.
+
+### Design decisions
+- The bloat was an instruction problem, not a discipline problem: every command said "append,"
+  none said "cap" or "delete," and there was no other place for narrative detail. Adding an
+  Execution Log to plan.md was a precondition for capping context.md — without a destination,
+  a cap just loses information.
+- The archive is verified by `diff` against an untouched scratch copy of the original, and the
+  remediation is instructed to stop dead on any mismatch. Bloat is annoying; silent data loss
+  during cleanup is worse, so the trim is gated on a proven-good copy.
+- `plan.md` Execution Logs are allowed to grow without bound — a plan.md is read only while its
+  enhancement is active, so its size is a per-enhancement cost, not a per-session one.
+- Decisions were routed to `blueprint.md` rather than a context.md table because the blueprint
+  is already the durable architecture record with a changelog — the context.md table was a
+  second, unbounded copy of it.
+
+---
+
 ## v1.6 — 2026-06-15
 
 ### Added

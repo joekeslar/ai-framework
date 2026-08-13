@@ -128,6 +128,48 @@ are current and nothing was missed.
 
 ---
 
+## Keeping context.md Lean
+
+`ai/context.md` is read at the start of every session, so every line in it has a recurring
+cost. It is a **snapshot, not a log**. The rules — enforced by the session commands, and
+stated identically in `CLAUDE.md` and `ai/principles.md`:
+
+- `**Last updated:**` is ONE line: date + one sentence. It is **replaced** each time, never
+  appended to, never a nested changelog
+- Per-session narrative detail goes in the active enhancement's `plan.md` **Execution Log**.
+  context.md points at it rather than retelling it
+- `## Recent Sessions` is a rolling list capped at ~3 one-line entries. Adding one drops the oldest
+- `## Open Issues` holds unresolved items only — resolved items are **deleted**, not struck through
+- `## What's Next` holds open items plus a single launch tracker — completed items are deleted
+- Architectural decisions go in the `ai/blueprint.md` changelog, not a table in context.md
+- Prefer a pointer to `ENHANCEMENTS.md` / `plan.md` / `blueprint.md` over restating them
+- The durable `## Key Facts` reference core (ports, migration commands, env/OAuth gotchas)
+  **stays** — prune only entries the code has superseded
+
+### ai/context-archive.md
+
+History that's worth keeping but not worth re-reading every session goes in
+`ai/context-archive.md`. It's created **lazily** — a fresh project doesn't have one — and it
+is **never in the session-start read list**. The file stays in the repo; it's just out of the
+read path.
+
+### Remediating an already-bloated project
+
+Existing projects that grew a bloated context.md can be pared down — opt-in, one time, per
+project. In Claude Code, copy `.claude/commands/ai/context-pare-down.md` into the project and
+run `/ai:context-pare-down`. It:
+
+1. Copies the current `ai/context.md` **verbatim** into `ai/context-archive.md`
+2. **Diff-verifies** the archive against the original — a hard gate; nothing is trimmed until
+   the diff is clean
+3. Rewrites `context.md` to the lean skeleton, carrying forward only current state and the
+   full Key Facts reference core
+
+Nothing is lost — everything trimmed is in the archive, and both files should be committed
+together in one commit.
+
+---
+
 ## Document Governance
 
 **When does each file change?**
@@ -137,7 +179,9 @@ are current and nothing was missed.
 | `spec.md` | A meaningful product requirement changes or is added | You — review carefully, version it |
 | `blueprint.md` | An architectural decision is made or changed | Claude at end of session, or you |
 | `principles.md` | A new design rule is established or an old one changes | You — then sync `CLAUDE.md` |
-| `context.md` | Every session ends | Claude — automatically |
+| `context.md` | Every session ends — as a lean snapshot, never a growing log | Claude — automatically |
+| `context-archive.md` | Only when history is pared off context.md | Claude — via `/ai:context-pare-down`, never read at session start |
+| `enhancements/NNN/plan.md` | Every checkpoint — the Execution Log is where session detail goes | Claude — automatically |
 | `enhancements/ENHANCEMENTS.md` | An enhancement starts, completes, or is added | Claude — automatically |
 | `changelog.md` | A release or enhancement ships | You — brief entry |
 
@@ -156,14 +200,15 @@ my-app/
 │   ├── spec.md                    # WHAT the app does — stable, versioned
 │   ├── blueprint.md               # HOW it's built — evolves with the app
 │   ├── principles.md              # Design rules — Claude always follows these
-│   ├── context.md                 # Current state — Claude maintains this
+│   ├── context.md                 # Current state — LEAN SNAPSHOT, Claude maintains this
+│   ├── context-archive.md         # Frozen history — created lazily, NEVER read at session start
 │   └── enhancements/
 │       ├── ENHANCEMENTS.md        # Status board (grouped by status) — Claude maintains this
 │       ├── status.sh             # Prints the board in the terminal — read-only
 │       ├── ideas/                 # Parking lot for ideas not ready to plan
 │       │   └── [idea.md files]
 │       ├── 001-foundation/
-│       │   └── plan.md
+│       │   └── plan.md            # Includes the Execution Log — where session detail lives
 │       ├── 002-auth/
 │       │   ├── plan.md
 │       │   └── decisions.md       # Optional: notable decisions and why
@@ -175,7 +220,8 @@ my-app/
 │           ├── session-checkpoint.md  # /ai:session-checkpoint
 │           ├── enhancement-closeout.md # /ai:enhancement-closeout
 │           ├── session-end.md         # /ai:session-end
-│           └── board.md               # /ai:board — prints the enhancement status board
+│           ├── board.md               # /ai:board — prints the enhancement status board
+│           └── context-pare-down.md   # /ai:context-pare-down — one-time context.md remediation
 ├── changelog.md                   # What shipped and when (brief)
 └── [source code]
 ```
@@ -193,7 +239,7 @@ ai-framework/
 │   │   ├── spec.md
 │   │   ├── blueprint.md
 │   │   ├── principles.md
-│   │   ├── context.md
+│   │   ├── context.md             # Lean snapshot skeleton — stays lean by contract
 │   │   └── enhancements/
 │   │       ├── ENHANCEMENTS.md    # Status board (grouped by status) — Claude maintains this
 │   │       ├── status.sh         # Prints the board in the terminal — read-only
@@ -207,7 +253,8 @@ ai-framework/
 │   │           ├── session-checkpoint.md
 │   │           ├── enhancement-closeout.md
 │   │           ├── session-end.md
-│   │           └── board.md       # /ai:board — prints the enhancement status board
+│   │           ├── board.md       # /ai:board — prints the enhancement status board
+│   │           └── context-pare-down.md  # /ai:context-pare-down — one-time context.md remediation
 │   └── changelog.md
 ├── templates/
 │   ├── enhancement.md             # Standard feature, bug fix, or refactor

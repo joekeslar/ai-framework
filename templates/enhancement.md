@@ -52,11 +52,28 @@ If yes, note what needs a test: [e.g., "auth token refresh", "payment confirmati
 
 ---
 
+## Execution Log
+
+> **This is where per-session narrative detail lives** — not `ai/context.md`. At each
+> checkpoint and at session end, append a dated entry here: what was completed, exactly where
+> we stopped, what to pick up next. `context.md` carries one capped line pointing back here.
+> This file grows; that's fine — it is only read when this enhancement is active.
+
+### [Date]
+- Completed: [what got done]
+- Stopped at: [exact point to resume from]
+- Notes: [decisions, surprises, things to watch]
+
+---
+
 ## Decisions Made
 
 | Decision | What was decided | Why |
 |---|---|---|
 | | | |
+
+> Architectural decisions also go into `ai/blueprint.md` (Key Technical Decisions + Changelog)
+> — that's the durable home. Not `ai/context.md`.
 
 ---
 

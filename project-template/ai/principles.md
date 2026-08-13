@@ -75,6 +75,17 @@ Key files for context:
 - At the start of each session: read `ai/context.md` and note the "Last updated" date — flag it if it looks stale before starting work
 - If there's an active enhancement plan, confirm its assumptions still hold given what's been completed since it was written — flag mismatches before implementing
 - Run checkpoint updates throughout the session — after decisions, status changes, or meaningful work — not just at the end
+- **`context.md` is a lean snapshot, not a log.** It is read at the start of every session, so
+  every line costs. Bias every edit toward smaller:
+  - `**Last updated:**` is ONE line — date + one sentence. **Replace** it each time. Never append to it, never nest a changelog under it
+  - Per-session narrative detail goes in the active enhancement's `plan.md` **Execution Log** — not here. context.md links to it
+  - `## Recent Sessions` is a rolling list capped at ~3 one-line entries, each pointing at its plan.md. Adding one means dropping the oldest
+  - `## Open Issues` holds unresolved items only — delete them when resolved. No strike-through history
+  - `## What's Next` holds open items plus a single launch tracker — delete completed ones
+  - Architectural decisions go in the `ai/blueprint.md` changelog, not a table in context.md
+  - Prefer a pointer over a restatement — link `ENHANCEMENTS.md`, `plan.md`, `blueprint.md`
+  - Keep the durable `## Key Facts` reference core (ports, commands, env/OAuth gotchas); prune only superseded entries
+  - History worth keeping but not worth re-reading lives in `ai/context-archive.md` — created lazily, never in the session-start read list. If context.md has already grown into a log, pare it down (`/ai:context-pare-down` in Claude Code): archive the current file verbatim first, then rewrite it lean
 - When completing an enhancement, run an impact scan before closing it out:
   - Check all Not Started and In Progress enhancement plan.md files
   - Check all idea files in `ai/enhancements/ideas/`
