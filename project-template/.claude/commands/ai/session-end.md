@@ -1,3 +1,7 @@
+---
+description: Close the session — update plan.md, context.md, and the board, then push
+---
+
 Before we close, determine which state applies.
 
 In every case: **narrative detail goes in the active enhancement's `plan.md` Execution Log.

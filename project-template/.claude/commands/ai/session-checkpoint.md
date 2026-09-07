@@ -1,3 +1,7 @@
+---
+description: Mid-session checkpoint — log the delta to plan.md, keep context.md lean
+---
+
 Quick checkpoint update. Capture the delta — and keep `ai/context.md` a lean snapshot.
 
 1. **The active enhancement's `plan.md`** — this is where detail goes. Append to its

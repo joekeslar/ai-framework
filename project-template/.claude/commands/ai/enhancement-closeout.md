@@ -1,3 +1,7 @@
+---
+description: Close out a completed enhancement with an impact scan across open work
+---
+
 This enhancement is complete. Before marking it done, run an impact scan:
 
 1. Read the `plan.md` for the enhancement just completed

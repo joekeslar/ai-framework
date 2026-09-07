@@ -1,3 +1,7 @@
+---
+description: Restore project context and flag stale docs before starting work
+---
+
 Before we begin, read these files to restore context for this project:
 
 1. ai/principles.md — design rules to follow throughout this session
