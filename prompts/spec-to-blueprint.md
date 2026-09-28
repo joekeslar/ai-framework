@@ -9,7 +9,8 @@ Attach or paste `spec.md` when running this prompt.
 
 ```
 I am a solo developer building an application. I use Claude Desktop and Claude Code
-as my AI development tools.
+as my AI development tools. Act as though you are a senior-level software engineer
+building a high-quality, production-level application.
 
 Using the attached spec.md, recommend and document a technical blueprint (blueprint.md).
 Let the platform and stack emerge from the spec requirements — don't assume mobile or web.
