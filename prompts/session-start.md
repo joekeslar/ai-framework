@@ -5,7 +5,7 @@ Attach the relevant files as noted.
 
 ---
 
-## Full Session Start (attach all three files)
+## Full Session Start (attach the files it lists)
 
 ```
 Before we begin, please read these files to restore your context for this project:
@@ -13,6 +13,8 @@ Before we begin, please read these files to restore your context for this projec
 1. ai/principles.md — design rules you must follow throughout this session
 2. ai/context.md — current state of the app (what's built, what's in progress, known issues)
 3. The plan.md for the active enhancement — path is in the "Active enhancement" field of context.md
+4. The sections of ai/key-facts.md for the areas that plan touches, if the file exists — the
+   index under "Key Facts" in context.md maps areas to sections. Read only those sections
 
 Then do a quick recovery check:
 - Note the "Last updated" date in context.md — if it looks older than our last session,
@@ -96,7 +98,9 @@ line has a recurring cost. Bias every edit toward smaller:
 - "What's Next" holds open items plus a single launch tracker — delete completed ones
 - Architectural decisions go in the blueprint.md changelog, not a table in context.md
 - Prefer pointers to ENHANCEMENTS.md / plan.md / blueprint over restating them
-- KEEP the durable "Key Facts" reference core; prune only superseded entries
+- KEEP the "Key Facts" core to what nearly every session needs; a gotcha that belongs to one
+  area goes in its section of ai/key-facts.md, with an index row in Key Facts. Prune only
+  superseded entries
 - Older history is frozen in ai/context-archive.md, which is never read at session start
 
 Before saving: if context.md is longer than it was at the start of the session, find what

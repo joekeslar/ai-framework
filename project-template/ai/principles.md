@@ -84,7 +84,7 @@ Key files for context:
   - `## What's Next` holds open items plus a single launch tracker — delete completed ones
   - Architectural decisions go in the `ai/blueprint.md` changelog, not a table in context.md
   - Prefer a pointer over a restatement — link `ENHANCEMENTS.md`, `plan.md`, `blueprint.md`
-  - Keep the durable `## Key Facts` reference core (ports, commands, env/OAuth gotchas); prune only superseded entries
+  - Keep the durable `## Key Facts` reference core (ports, commands, env/OAuth gotchas) to what nearly every session needs. A gotcha that belongs to one area goes in that area's section of `ai/key-facts.md` — never read at session start, read by section before touching the area — and the index under `## Key Facts` names the area. Prune only superseded entries
   - History worth keeping but not worth re-reading lives in `ai/context-archive.md` — created lazily, never in the session-start read list. If context.md has already grown into a log, pare it down (`/ai:context-pare-down` in Claude Code): archive the current file verbatim first, then rewrite it lean
 - When completing an enhancement, run an impact scan before closing it out:
   - Check all Not Started and In Progress enhancement plan.md files

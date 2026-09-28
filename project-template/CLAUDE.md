@@ -11,6 +11,7 @@ Before doing anything else, read:
 1. `ai/context.md` — current state of the app (what's built, in progress, known issues)
 2. `ai/principles.md` — design rules that must not drift
 3. The plan.md for the active enhancement — path is in the "Active enhancement" field of context.md
+4. The sections of `ai/key-facts.md` for the areas that plan touches — the index under `## Key Facts` in context.md maps areas to sections. Read only those sections, not the whole file
 
 Confirm briefly what you understand about current state and today's goal before starting work.
 
@@ -82,8 +83,10 @@ Update docs at natural checkpoints throughout the session — don't batch everyt
    - `## What's Next` holds open items plus a single launch tracker — delete completed ones.
    - Architectural decisions go in the `ai/blueprint.md` changelog, not a table in context.md.
    - Prefer a pointer over a restatement — link `ENHANCEMENTS.md`, `plan.md`, `blueprint.md`.
-   - Keep the durable `## Key Facts` reference core (ports, commands, env/OAuth gotchas);
-     prune only superseded entries.
+   - Keep the durable `## Key Facts` reference core (ports, commands, env/OAuth gotchas) to what
+     nearly every session needs. A gotcha that belongs to one area goes in that area's section of
+     `ai/key-facts.md` — never read at session start, read by section before touching the area —
+     and the index under `## Key Facts` names the area. Prune only superseded entries.
    - History worth keeping but not worth re-reading lives in `ai/context-archive.md` — created
      lazily, never in the session-start read list. If context.md has already grown into a log,
      run `/ai:context-pare-down`.

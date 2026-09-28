@@ -56,7 +56,14 @@ Bias every edit toward **smaller**.
 - Prefer a pointer over a restatement — link `ENHANCEMENTS.md`, `plan.md`, `blueprint.md`
   rather than duplicating their content.
 - KEEP the durable `## Key Facts` reference core (ports, migration commands, env/OAuth
-  gotchas). Prune only entries the code has actually superseded.
+  gotchas) to what nearly every session needs. A gotcha learned this session that belongs to
+  one area goes in that area's section of `ai/key-facts.md`; if no section fits, add one and a
+  row for it in the index under `## Key Facts`. If `ai/key-facts.md` doesn't exist yet, create
+  it — a `# [App Name] — Key Facts` title and a one-line note that it is read by section, never
+  at session start — with this fact under its area's heading, and add the index. Prune only
+  entries the code has actually superseded.
+- The placement test: *would a session that never touches this area still need this fact?* If
+  not — or if unsure — it goes in `ai/key-facts.md`.
 
 **Before saving:** if context.md is longer than it was at the start of the session, find what
 to delete. If it has already drifted well past the lean skeleton, say so and offer

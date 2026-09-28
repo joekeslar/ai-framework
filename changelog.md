@@ -4,6 +4,75 @@
 
 ---
 
+## v1.8 — 2026-09-28
+
+**Theme: Key Facts in two tiers.** v1.7 capped every section of `ai/context.md` except
+`## Key Facts`, which every command kept in full. In a mature project that exemption became most
+of the file. In Cornicione Perfected, Key Facts was 71% of a 41 KB context.md, and a v1.7
+pare-down cut the file by only 1%. Every entry was still current, but only 9 of 66 were needed
+in nearly every session. This release keeps every fact and moves the ones that belong to one
+area out of the session-start read path.
+
+### The contract
+- `## Key Facts` in context.md holds only what nearly every session needs, plus an index that
+  maps each area to a section of `ai/key-facts.md`
+- `ai/key-facts.md` holds area gotchas under one `##` heading per area. It is never read in full
+  at session start, and a section is read before touching its area
+- The placement test: would a session that never touches this area still need this fact? When
+  unsure, the fact goes in `key-facts.md`
+- A new section and its index row are added in the same edit. Prune only superseded entries
+
+### Added
+- **`ai/key-facts.md` convention**: created lazily by `/ai:session-end` for the first fact that
+  belongs to one area, and read by section. The template ships no empty copy.
+- `/ai:context-pare-down` **Step 4b — Split Key Facts**: sorts entries with the placement test
+  and moves area entries verbatim. A hard gate then verifies that every entry line, including
+  indented continuation lines and any existing `key-facts.md`, appears exactly once across the
+  two files, and that every section has an index row. Corrections (superseded entries, compound
+  entries split) come after the gate, as a separate reported pass.
+
+### Changed
+- `project-template/ai/context.md`: the Key Facts bullet in the maintenance note, the Key Facts
+  note, an index placeholder under the example entries, and a `## Pointers` line
+- `project-template/CLAUDE.md` and `project-template/ai/principles.md`: the Key Facts bullet,
+  in the same words in both. `CLAUDE.md`'s "First — Read These Files" list gains the key-facts
+  read, matching `/ai:session-start`
+- `project-template/.claude/commands/ai/session-start.md`: reads the plan's key-facts sections
+- `project-template/.claude/commands/ai/session-end.md`: routes an area gotcha to its section,
+  states the placement test, and gives the header for a newly created `key-facts.md`
+- `project-template/.claude/commands/ai/context-pare-down.md`: Step 4 carries Key Facts forward
+  **verbatim**. It no longer allows a superseded entry to be dropped mid-rewrite, because that
+  would make the Step 4b gate fail; pruning moved to the post-gate correction pass. Preflight
+  and the report now include byte sizes and `key-facts.md`, and all three files are committed
+  together
+- `prompts/session-start.md` (Claude Desktop): Full Session Start reads the plan's key-facts
+  sections, and the End of Session contract routes area gotchas
+- `START-HERE.md`: the Key Facts bullet, a new `### ai/key-facts.md` subsection, the
+  remediation steps and upgrade instructions, the governance table and the folder diagram
+
+### Unchanged (deliberately)
+- `session-checkpoint.md` (command and prompt) and `enhancement-closeout.md`: none of them
+  writes Key Facts
+- The rules that must never be broken stay as one-liners in `CLAUDE.md`'s "Never Do These".
+  `key-facts.md` holds the *why* and the *how*
+
+### Design decisions
+- Key Facts only grows. Each entry records a failure the code doesn't make visible, and the
+  warning outlives the fix. Pruning deletes the record that prevents a regression, and the
+  archive is never read, so neither option works. Moving area facts out of the read path does.
+- The index lives in context.md, not in key-facts.md, so a session knows which section to
+  read without opening the file. Areas are named by what a session is about to open, not by
+  category, so the match happens at the moment it matters.
+- The split is verified verbatim before any correction, for the same reason as the archive:
+  a move that also rewrites can lose something without anyone noticing.
+- Nested per-directory `CLAUDE.md` files were considered and deferred. The framework also
+  serves Claude Desktop, many areas don't map to one directory, and facts scattered across the
+  tree stop being maintained as a set.
+- Proven in Cornicione Perfected: context.md went from 41,211 to 17,143 bytes (about 10.3k to
+  4.3k tokens at session start), and all 66 facts were kept.
+
+---
+
 ## v1.7 — 2026-08-13
 
 **Theme: `ai/context.md` is a lean snapshot, not a log.** Live projects were developing severe

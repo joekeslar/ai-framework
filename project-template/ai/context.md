@@ -16,7 +16,8 @@
 > - Architectural decisions go in the `ai/blueprint.md` changelog, not here.
 > - Prefer a pointer over a restatement — link `ENHANCEMENTS.md`, `plan.md`, `blueprint.md`
 >   instead of duplicating them.
-> - `## Key Facts` is the durable reference core. Keep it; prune only what the code superseded.
+> - `## Key Facts` is the durable reference core — only what nearly every session needs, plus an
+>   index into `ai/key-facts.md`, where subsystem gotchas live. Prune only what the code superseded.
 > - History worth keeping but not worth re-reading every session goes to `ai/context-archive.md`,
 >   which is **not** in the session-start read list. If this file has already grown past the
 >   skeleton below, run `/ai:context-pare-down`.
@@ -61,13 +62,20 @@
 
 ## Key Facts [the AI] Should Know
 
-> The durable reference core — things that aren't obvious from the code. Gotchas, ports,
-> commands, environment quirks. This section is meant to persist; prune only superseded entries.
+> What nearly every session needs. Subsystem gotchas live in [`ai/key-facts.md`](key-facts.md),
+> which is **not** read at session start — before touching an area in the index below, read its
+> section. A new fact goes there unless nearly every session needs it; prune only superseded entries.
 
 - [e.g., "All API calls go through a central client module — never call fetch directly in a component"]
 - [e.g., "Dev server runs on :3000, API on :8787"]
 - [e.g., "DB migrations: `npm run db:migrate` — never edit past migration files"]
 - [e.g., "Copy .env.example to .env to run locally; OAuth redirect must be the exact localhost URL"]
+
+**Before you touch an area, read its section of [`key-facts.md`](key-facts.md):**
+
+| Area | Section |
+|---|---|
+| [packages, directories, commands or words that mark the area] | [Section](key-facts.md#section) |
 
 ---
 
@@ -78,4 +86,5 @@
 - **Architecture & decisions:** [`ai/blueprint.md`](blueprint.md)
 - **Design rules:** [`ai/principles.md`](principles.md)
 - **Product spec:** [`ai/spec.md`](spec.md)
+- **Subsystem gotchas:** [`ai/key-facts.md`](key-facts.md) — read by section, never at session start
 - **Frozen history:** [`ai/context-archive.md`](context-archive.md) — created lazily, never read at session start

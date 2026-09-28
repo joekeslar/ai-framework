@@ -143,8 +143,41 @@ stated identically in `CLAUDE.md` and `ai/principles.md`:
 - `## What's Next` holds open items plus a single launch tracker — completed items are deleted
 - Architectural decisions go in the `ai/blueprint.md` changelog, not a table in context.md
 - Prefer a pointer to `ENHANCEMENTS.md` / `plan.md` / `blueprint.md` over restating them
-- The durable `## Key Facts` reference core (ports, migration commands, env/OAuth gotchas)
-  **stays** — prune only entries the code has superseded
+- The durable `## Key Facts` reference core (ports, commands, env/OAuth gotchas) holds only what
+  nearly every session needs. A gotcha that belongs to one area goes in that area's section of
+  `ai/key-facts.md` — never read at session start, read by section before touching the area —
+  and the index under `## Key Facts` names the area. Prune only superseded entries
+
+### ai/key-facts.md
+
+Key Facts only grows. Each entry records a failure that cost real time and that the code
+doesn't make visible, and the warning outlives the fix, so entries are almost never superseded.
+In a mature project this section becomes most of context.md. Pruning would delete the record
+that stops the bug coming back, and archiving would hide it where no session looks. Instead,
+Key Facts has two tiers:
+
+- **The core**, under `## Key Facts` in context.md: facts a session needs even if it never
+  touches their area, such as ports, dev and test commands, toolchain quirks and sync rules.
+  It also holds an **index**, a table that maps each area to a section of `ai/key-facts.md`.
+  An area is named by the concrete things a session is about to open (packages, directories,
+  commands, domain words), not by an abstract category.
+- **`ai/key-facts.md`**: every other fact, under a `##` heading per area. It is never read in
+  full at session start. `/ai:session-start` reads only the sections the active plan touches,
+  and any session reads a section before touching that area.
+
+**The placement test:** *would a session that never touches this area still need this fact?*
+If yes, it goes in the core. If no, it goes in `key-facts.md`. When unsure, choose `key-facts.md`:
+a misplaced core fact costs one extra section read, while an area fact left in the core costs
+every session.
+
+Like the archive, `key-facts.md` is created **lazily**. `/ai:session-end` creates it for the
+first fact that belongs to one area. A new area means a new `##` heading **and** a new index
+row, in the same edit, because a section with no row can't be reached. The file is outside the
+session-start read path, like the archive. The difference is that `key-facts.md` is read by
+section, on demand, while the archive is never read.
+
+Rules that must never be broken still go as one-liners in `CLAUDE.md`'s "Never Do These".
+`key-facts.md` holds the *why* and the *how*.
 
 ### ai/context-archive.md
 
@@ -156,17 +189,25 @@ read path.
 ### Remediating an already-bloated project
 
 Existing projects that grew a bloated context.md can be pared down — opt-in, one time, per
-project. In Claude Code, copy `.claude/commands/ai/context-pare-down.md` into the project and
-run `/ai:context-pare-down`. It:
+project. In Claude Code, copy `.claude/commands/ai/context-pare-down.md` into the project,
+along with the updated `session-start.md` and `session-end.md` so later sessions keep the
+two-tier Key Facts. Update the Key Facts bullet in `CLAUDE.md` and `ai/principles.md` to match
+the template, then run `/ai:context-pare-down`. It:
 
 1. Copies the current `ai/context.md` **verbatim** into `ai/context-archive.md`
 2. **Diff-verifies** the archive against the original — a hard gate; nothing is trimmed until
    the diff is clean
-3. Rewrites `context.md` to the lean skeleton, carrying forward only current state and the
-   full Key Facts reference core
+3. Rewrites `context.md` to the lean skeleton, carrying forward only current state and every
+   Key Facts entry
+4. Splits Key Facts using the placement test. Area facts move **verbatim** into
+   `ai/key-facts.md`, and the core stays in context.md with the index. A hard gate verifies that
+   every entry appears exactly once across the two files and that every section has an index
+   row. Corrections, such as removing superseded entries, come only after that, as a separate,
+   reported pass
 
-Nothing is lost — everything trimmed is in the archive, and both files should be committed
-together in one commit.
+Nothing is lost. Everything trimmed is in the archive, and every Key Facts entry is in the core
+or in `key-facts.md`. Commit `context.md`, `context-archive.md` and `key-facts.md` together in
+one commit.
 
 ---
 
@@ -180,6 +221,7 @@ together in one commit.
 | `blueprint.md` | An architectural decision is made or changed | Claude at end of session, or you |
 | `principles.md` | A new design rule is established or an old one changes | You — then sync `CLAUDE.md` |
 | `context.md` | Every session ends — as a lean snapshot, never a growing log | Claude — automatically |
+| `key-facts.md` | A gotcha that belongs to one area is learned, or Key Facts is split | Claude — via `/ai:session-end` or `/ai:context-pare-down`; read by section, never at session start |
 | `context-archive.md` | Only when history is pared off context.md | Claude — via `/ai:context-pare-down`, never read at session start |
 | `enhancements/NNN/plan.md` | Every checkpoint — the Execution Log is where session detail goes | Claude — automatically |
 | `enhancements/ENHANCEMENTS.md` | An enhancement starts, completes, or is added | Claude — automatically |
@@ -201,6 +243,7 @@ my-app/
 │   ├── blueprint.md               # HOW it's built — evolves with the app
 │   ├── principles.md              # Design rules — Claude always follows these
 │   ├── context.md                 # Current state — LEAN SNAPSHOT, Claude maintains this
+│   ├── key-facts.md               # Subsystem gotchas — read by section, never at session start
 │   ├── context-archive.md         # Frozen history — created lazily, NEVER read at session start
 │   └── enhancements/
 │       ├── ENHANCEMENTS.md        # Status board (grouped by status) — Claude maintains this

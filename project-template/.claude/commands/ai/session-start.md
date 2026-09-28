@@ -7,6 +7,7 @@ Before we begin, read these files to restore context for this project:
 1. ai/principles.md — design rules to follow throughout this session
 2. ai/context.md — current state of the app (what's built, in progress, known issues)
 3. The plan.md for the active enhancement — path is in the "Active enhancement" field of context.md
+4. The sections of ai/key-facts.md for the areas that plan touches — the index under `## Key Facts` in context.md maps areas to sections. Read only those sections, not the whole file
 
 Recovery check:
 - Note the "Last updated" date in context.md — if it looks older than our last session, flag it before starting
